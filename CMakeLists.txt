@@ -9,8 +9,8 @@
 # - set install path with "cmake -DCMAKE_INSTALL_PREFIX=/path/to/install .." in the above
 # - install with "make install"
 
-PROJECT ( LOG4CPP )
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
+PROJECT ( LOG4CPP )
 
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_SOURCE_DIR}/include )
 INCLUDE_DIRECTORIES ( ${CMAKE_CURRENT_SOURCE_DIR}/. )
@@ -82,6 +82,10 @@ ADD_LIBRARY ( ${LOG4CPP_LIBRARY_NAME} SHARED
   src/PortabilityImpl.cpp
   src/AbortAppender.cpp
 )
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+  target_compile_options(${LOG4CPP_LIBRARY_NAME} PRIVATE -Wno-deprecated-declarations)
+endif()
 
 IF (WIN32)
   TARGET_LINK_LIBRARIES (${LOG4CPP_LIBRARY_NAME} kernel32 user32 ws2_32 advapi32 )
