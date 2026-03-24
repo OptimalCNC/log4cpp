@@ -9,6 +9,7 @@
 
 #include <log4cpp/Portability.hh>
 #include <log4cpp/FileAppender.hh>
+#include <time.h>
 #include <string>
 #include <stdarg.h>
 
