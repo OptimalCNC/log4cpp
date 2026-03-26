@@ -26,6 +26,10 @@
 #include <direct.h>  
 #endif
 
+#ifndef WIN32
+#include <sys/time.h>
+#endif
+
 #ifdef WIN32
 #pragma comment(lib, "Ws2_32.lib")
 #endif
@@ -226,13 +230,17 @@ namespace OnlyManualTesting {
 			return -1;
 		}
 #else
-		time_t  now;
+		time_t now;
 		if (time(&now) == -1)
 			return -1;
 
 		now += seconds;
 
-		if (stime(&now) == -1) {
+		timeval tv;
+		tv.tv_sec = now;
+		tv.tv_usec = 0;
+
+		if (settimeofday(&tv, 0) == -1) {
 			std::cerr << "Can not set date. Need admin privileges?" << std::endl;
 			return -1;
 		}
