@@ -51,7 +51,7 @@ namespace log4cpp {
 		/// \todo else produce error on stderr?
     }
 
-   std::auto_ptr<Appender> create_generation_file_appender(const FactoryParams& params)
+   std::unique_ptr<Appender> create_generation_file_appender(const FactoryParams& params)
    {
       std::string name, filename;
       bool append = true;
@@ -59,6 +59,6 @@ namespace log4cpp {
       params.get_for("rool file appender").required("name", name)("filename", filename)
                                           .optional("append", append)("mode", mode);
 
-      return std::auto_ptr<Appender>(new GenerationalFileAppender(name, filename, append, mode));
+      return std::unique_ptr<Appender>(new GenerationalFileAppender(name, filename, append, mode));
    }
 }
